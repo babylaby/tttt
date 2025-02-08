@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เซอร์ไพรส์วันวาเลนไทน์</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff0f6;
+            color: #ff4081;
+            text-align: center;
+            padding: 50px;
+            background-image: url('https://www.transparenttextures.com/patterns/language.png'), url('https://www.example.com/heart-background.gif');
+            background-size: cover;
+            background-position: center;
+            transition: background-color 0.5s ease;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ff4081;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(255, 20, 147, 0.6);
+        }
+
+        .question {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #ff4081;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .button {
+            background-color: #ff4081;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .button:hover {
+            background-color: #ff1f61;
+            transform: scale(1.1);
+        }
+
+        .heart-effect {
+            animation: heartbeat 1s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .question-container {
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .question-container.show {
+            opacity: 1;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .countdown {
+            font-size: 2em;
+            margin-top: 20px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .error-message {
+            color: red;
+            font-size: 1.2em;
+        }
+
+        /* Animation for background color change */
+        @keyframes bgChange {
+            0% { background-color: #fff0f6; }
+            50% { background-color: #f7d8d7; }
+            100% { background-color: #fff0f6; }
+        }
+
+        .heart-icon {
+            font-size: 3em;
+            color: red;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .fade-out {
+            animation: fadeOut 0.5s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s forwards;
+        }
+
+        .media-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .media-container img, .media-container video {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        /* Media Queries for different screen sizes */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            .question {
+                font-size: 1.2em;
+            }
+            .button {
+                padding: 12px 24px;
+                font-size: 1.1em;
+            }
+            .countdown {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2em;
+            }
+            .question {
+                font-size: 1em;
+            }
+            .button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+            .countdown {
+                font-size: 1.2em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>เซอร์ไพรส์วันวาเลนไทน์ <span class="heart-icon">❤️</span></h1>
+
+    <div id="content">
+        <!-- คำถาม 1 -->
+        <div id="question-1" class="question-container show">
+            <p class="question">วันนี้วันอะไรคะ?</p>
+            <button class="button" onclick="checkAnswer('question-1', 'วันวาเลนไทน์')">วันวาเลนไทน์</button>
+            <p id="error-1" class="error-message"></p>
+        </div>
+
+        <!-- คำถาม 2 -->
+        <div id="question-2" class="question-container hidden">
+            <p class="question">วันนี้บี๋รู้สึกเหนื่อยไหม?</p>
+            <button class="button" onclick="checkAnswer('question-2', 'ไม่เหนื่อย')">ไม่เหนื่อย</button>
+            <button class="button" onclick="checkAnswer('question-2', 'เหนื่อย')">เหนื่อย</button>
+            <p id="error-2" class="error-message"></p>
+        </div>
+
+        <!-- คำถาม 3 (ถ้าตอบเหนื่อย) -->
+        <div id="question-3" class="question-container hidden">
+            <p class="question" id="question-3-text"></p>
+            <button class="button heart-effect" onclick="checkAnswer('question-3', 'กอด')">กอด</button>
+            <p id="error-3" class="error-message"></p>
+        </div>
+
+        <!-- ข้ามไปคำถาม 5 -->
+        <div id="question-5" class="question-container hidden">
+            <p class="question">คิดถึงตอนที่เราเจอกันครั้งแรกไหม เค้ายังจำได้ดีเลย</p>
+            <p class="countdown" id="countdown-5">3...</p> 
+            <button class="button" onclick="checkAnswer('question-5', 'ไปต่อ')">ไปต่อ</button>
+            <p id="error-5" class="error-message"></p>
+        </div>
+
+        <!-- คำถาม 6 -->
+        <div id="question-6" class="question-container hidden">
+            <p class="question">บี๋รู้ไหมว่าเค้ารู้สึกยังไงที่ได้อยู่ข้างๆ บี๋ทุกวัน?</p>
+            <button class="button" onclick="checkAnswer('question-6', 'รู้สึกดีมาก')">รู้สึกดีมาก</button>
+            <button class="button" onclick="checkAnswer('question-6', 'มีความสุขสุดๆ')">มีความสุขสุดๆ</button>
+            <button class="button" onclick="checkAnswer('question-6', 'อบอุ่นใจทุกครั้งที่อยู่ด้วยกัน')">อบอุ่นใจทุกครั้งที่อยู่ด้วยกัน</button>
+            <p id="error-6" class="error-message"></p>
+        </div>
+
+        <!-- คำถาม 7 -->
+        <div id="question-7" class="question-container hidden">
+            <p class="question">ถ้าคิดถึงเค้า บี๋จะทำยังไง?</p>
+            <button class="button" onclick="checkAnswer('question-7', 'โทรหา')">โทรหา</button>
+            <button class="button" onclick="checkAnswer('question-7', 'ทักหา')">ทักหา</button>
+            <button class="button" onclick="checkAnswer('question-7', 'ให้เค้าไปหา')">ให้เค้าไปหา</button>
+            <p id="error-7" class="error-message"></p>
+        </div>
+
+        <!-- คำถาม 8 -->
+        <div id="question-8" class="question-container hidden">
+            <p class="question">อนาคตเราจะทำอะไรกัน?</p>
+            <button class="button" onclick="checkAnswer('question-8', 'ไปเที่ยวด้วยกัน')">ไปเที่ยวด้วยกัน</button>
+            <button class="button" onclick="checkAnswer('question-8', 'สร้างบ้านหลังเล็กๆ')">สร้างบ้านหลังเล็กๆ</button>
+            <button class="button" onclick="checkAnswer('question-8', 'ใช้ชีวิตร่วมกัน')">ใช้ชีวิตร่วมกัน</button>
+            <p id="error-8" class="error-message"></p>
+        </div>
+
+        <!-- คำถาม 9 -->
+        <div id="question-9" class="question-container hidden">
+            <p class="question">ความรักคืออะไร?</p>
+            <button class="button" onclick="checkAnswer('question-9', 'การให้ความสำคัญกันทุกๆ วัน')">การให้ความสำคัญกันทุกๆ วัน</button>
+            <button class="button" onclick="checkAnswer('question-9', 'การดูแลกันและกัน')">การดูแลกันและกัน</button>
+            <button class="button" onclick="checkAnswer('question-9', 'การได้อยู่ข้างๆ กัน')">การได้อยู่ข้างๆ กัน</button>
+            <p id="error-9" class="error-message"></p>
+        </div>
+
+        <!-- สุ่มรูปภาพและคลิป -->
+        <div id="media" class="media-container hidden">
+            <img id="random-image" src="" alt="สุ่มรูปภาพ">
+            <video id="random-video" controls class="hidden">
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+
+    </div>
+
+    <audio id="click-sound" src="your-audio-file.mp3" preload="auto"></audio>
+
+    <script>
+        function playSound() {
+            var sound = document.getElementById('click-sound');
+            sound.play();
+        }
+
+        function checkAnswer(questionId, answer) {
+            let correctAnswers = {
+                'question-1': 'วันวาเลนไทน์',
+                'question-2': ['เหนื่อย', 'ไม่เหนื่อย'],  
+                'question-3': 'กอด',
+                'question-5': 'ไปต่อ',
+                'question-6': 'อบอุ่นใจทุกครั้งที่อยู่ด้วยกัน',
+                'question-7': 'ให้เค้าไปหา',
+                'question-8': 'ใช้ชีวิตร่วมกัน',
+                'question-9': 'การให้ความสำคัญกันทุกๆ วัน'
+            };
+
+            if (Array.isArray(correctAnswers[questionId])) {
+                if (correctAnswers[questionId].includes(answer)) {
+                    nextQuestion(questionId, answer);
+                } else {
+                    showError(questionId);
+                }
+            } else {
+                if (correctAnswers[questionId] === answer) {
+                    nextQuestion(questionId);
+                } else {
+                    showError(questionId);
+                }
+            }
+        }
+
+        function showError(questionId) {
+            let errorMessage = document.getElementById('error-' + questionId.split('-')[1]);
+            errorMessage.textContent = 'คำตอบยังไม่ถูกต้อง';
+        }
+
+        function nextQuestion(currentQuestionId, answer = '') {
+            const currentQuestion = document.getElementById(currentQuestionId);
+            currentQuestion.classList.add('fade-out');
+
+            setTimeout(() => {
+                currentQuestion.classList.add('hidden');
+
+                if (currentQuestionId === 'question-2' && answer === 'เหนื่อย') {
+                    // ถ้าตอบเหนื่อยให้ไปข้อ 3
+                    const nextQuestionId = 'question-3';
+                    const nextQuestion = document.getElementById(nextQuestionId);
+                    nextQuestion.classList.remove('hidden');
+                    nextQuestion.classList.add('fade-in');
+                } else if (currentQuestionId === 'question-3') {
+                    // ข้ามไปข้อ 5 หลังจากข้อ 3
+                    const nextQuestionId = 'question-5';
+                    const nextQuestion = document.getElementById(nextQuestionId);
+                    nextQuestion.classList.remove('hidden');
+                    nextQuestion.classList.add('fade-in');
+                } else if (currentQuestionId === 'question-9') {
+                    // เมื่อถึงข้อ 9 พาไปที่ลิงก์
+                    window.location.href = "https://www.canva.com/design/DAGefZIp-jI/dAa1fdo92Wy-W09XJBVOwQ/edit";
+                } else {
+                    const nextQuestionId = 'question-' + (parseInt(currentQuestionId.split('-')[1]) + 1);
+                    const nextQuestion = document.getElementById(nextQuestionId);
+                    nextQuestion.classList.remove('hidden');
+                    nextQuestion.classList.add('fade-in');
+                }
+
+                playSound();
+            }, 500);
+        }
+    </script>
+
+</body>
+</html>
